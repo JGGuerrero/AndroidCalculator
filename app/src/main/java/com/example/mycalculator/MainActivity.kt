@@ -56,6 +56,17 @@ class MainActivity : AppCompatActivity() {
 //        lastNumeric = true
 
         if (newEquation == true){
+            var storedValue = binding.tvResult.text.toString()
+            var storedEquation = binding.tvStoredEquation.text
+            var storedLine = "$storedEquation $storedValue"
+            if (storedLine.length > 12) {
+                binding.tvStoredEquation.setTextSize(2, 30F)
+
+            } else {
+                binding.tvStoredEquation.setTextSize(2, 50F)
+            }
+            binding.tvStoredEquation.text = storedLine
+
             binding.tvResult.text = ""
             binding.tvResult.append((view as Button).text)
             lastNumeric = true
@@ -65,6 +76,11 @@ class MainActivity : AppCompatActivity() {
             lastNumeric = true
         }
         newEquation = false
+    }
+
+    fun onDelete(view: View){
+//        var updatedInput: String = binding.tvResult.text.toString().substring(0, binding.tvResult.text.length - 1)
+        binding.tvResult.text = binding.tvResult.text.toString().substring(0, binding.tvResult.text.length - 1)
     }
 
     fun onClear(view: View){

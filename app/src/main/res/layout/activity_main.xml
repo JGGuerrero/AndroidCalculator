@@ -17,6 +17,7 @@
         style="@style/result_style"
 
         android:textColor="#FF9800"
+        android:maxLength="20"
 
 
         >
@@ -40,6 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Del"
+        android:onClick="onDelete"
         android:textColor="#FFA460">
 
     </Button>
