@@ -12,14 +12,27 @@
     >
 
     <TextView
+        android:id="@+id/tvStoredEquation"
+        android:layout_width="match_parent"
+        style="@style/result_style"
+
+        android:textColor="#FF9800"
+
+
+        >
+    </TextView>
+    <TextView
         android:id="@+id/tvResult"
         android:layout_width="match_parent"
         style="@style/result_style"
-        android:layout_marginBottom="15dp"
+
+
 
         >
-
     </TextView>
+
+
+
 
     <Button
         android:id="@+id/buttonDelete"
@@ -47,7 +60,7 @@
         style="@style/cell_style_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="/"
+        android:text=" / "
         android:onClick="onOperator"
         android:textColor="#FFA460">
 
@@ -58,7 +71,7 @@
         style="@style/cell_style_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="*"
+        android:text=" * "
         android:onClick="onOperator"
         android:textColor="#FFA460">
 
@@ -99,7 +112,7 @@
         style="@style/cell_style_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="-"
+        android:text=" - "
         android:onClick="onOperator"
         android:textColor="#FFA460">
 
@@ -138,7 +151,7 @@
         android:id="@+id/buttonPlus"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="+"
+        android:text=" + "
         style="@style/cell_style_button"
         android:textColor="#FFA460"
         android:onClick="onOperator"
@@ -181,6 +194,7 @@
         android:layout_height="0dp"
         android:layout_rowSpan="2"
         android:text="="
+        android:onClick="onEqual"
         android:textColor="#FFA460">
 
     </Button>
@@ -216,19 +230,6 @@
         android:text=".">
 
     </Button>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

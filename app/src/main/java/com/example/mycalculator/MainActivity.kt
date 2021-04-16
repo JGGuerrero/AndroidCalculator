@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     var lastNumeric: Boolean = false
     var lastDot: Boolean = false
     var isPositive: Boolean = true
+    var newEquation: Boolean = false
 
     private lateinit var binding: ActivityMainBinding
 
@@ -51,13 +52,24 @@ class MainActivity : AppCompatActivity() {
 
 
     fun onDigit(view: View){
-        binding.tvResult.append((view as Button).text)
-        lastNumeric = true
+//        binding.tvResult.append((view as Button).text)
+//        lastNumeric = true
 
+        if (newEquation == true){
+            binding.tvResult.text = ""
+            binding.tvResult.append((view as Button).text)
+            lastNumeric = true
+        } else if (newEquation == false){
+
+            binding.tvResult.append((view as Button).text)
+            lastNumeric = true
+        }
+        newEquation = false
     }
 
     fun onClear(view: View){
         binding.tvResult.text = ""
+        binding.tvStoredEquation.text = ""
         lastDot = false
         lastNumeric = false
     }
@@ -76,7 +88,87 @@ class MainActivity : AppCompatActivity() {
             lastNumeric = true
             isPositive = false
         }
+    }
 
+    fun onEqual(view: View){
+        if (lastNumeric) {
+            var tvValue = binding.tvResult.text.toString()
+            var storedEquation = binding.tvResult.text
+            var prefix = ""
+
+            try {
+
+                if (tvValue.startsWith("-")){
+                    prefix = "-"
+                    tvValue = tvValue.substring(1)
+                }
+
+                binding.tvStoredEquation.text = "$storedEquation ="
+
+                if (tvValue.contains("-")){
+                    val splitValue = tvValue.split("-")
+
+                    var firstNum = splitValue[0]
+                    var secondNum = splitValue[1]
+
+                    if (!prefix.isEmpty()){
+                        firstNum = prefix + firstNum
+                    }
+
+                    binding.tvResult.text = removeZeroAfterDecimal((firstNum.toDouble() - secondNum.toDouble()).toString())
+                    newEquation = true
+                } else if (tvValue.contains("+")){
+                    val splitValue = tvValue.split("+")
+
+                    var firstNum = splitValue[0]
+                    var secondNum = splitValue[1]
+
+                    if (!prefix.isEmpty()){
+                        firstNum = prefix + firstNum
+                    }
+
+                    binding.tvResult.text = removeZeroAfterDecimal((firstNum.toDouble() + secondNum.toDouble()).toString())
+                    newEquation = true
+                } else if (tvValue.contains("/")){
+                    val splitValue = tvValue.split("/")
+
+                    var firstNum = splitValue[0]
+                    var secondNum = splitValue[1]
+
+                    if (!prefix.isEmpty()){
+                        firstNum = prefix + firstNum
+                    }
+
+                    binding.tvResult.text = removeZeroAfterDecimal((firstNum.toDouble() / secondNum.toDouble()).toString())
+
+                    newEquation = true
+                } else if (tvValue.contains("*")){
+                    val splitValue = tvValue.split("*")
+
+                    var firstNum = splitValue[0]
+                    var secondNum = splitValue[1]
+
+                    if (!prefix.isEmpty()){
+                        firstNum = prefix + firstNum
+                    }
+
+                    binding.tvResult.text = removeZeroAfterDecimal((firstNum.toDouble() * secondNum.toDouble()).toString())
+                    newEquation = true
+                }
+
+            } catch (e: ArithmeticException){
+                e.printStackTrace()
+            }
+
+        }
+    }
+
+    private fun removeZeroAfterDecimal(result: String) : String {
+        var value = result
+        if (value.contains(".0")){
+            value = result.substring(0, result.length - 2)
+        }
+        return value
 
     }
 
@@ -84,6 +176,7 @@ class MainActivity : AppCompatActivity() {
         if (lastNumeric && !isOperatorAdded(binding.tvResult.text.toString())) {
             binding.tvResult.append((view as Button).text)
             lastNumeric = false
+            newEquation = false
 
         }
     }
